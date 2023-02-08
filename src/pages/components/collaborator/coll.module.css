@@ -1,0 +1,26 @@
+.collContainer {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--darkColor3);
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+
+}
+
+.collContainer p {
+    font-size: 20px;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.collContainer p span {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 5px;
+}

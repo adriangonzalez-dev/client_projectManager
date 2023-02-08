@@ -1,0 +1,39 @@
+.task {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--decorationColor2);
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.task div {
+    display: flex;
+    align-items: center;
+    color: var(--lightColor1);
+    font-size: 20px;
+}
+
+.taskdiv1 {
+    width: 60%;
+    justify-content: space-around;
+}
+
+.taskdiv2 {
+    justify-content: space-around;
+    gap: 5px;
+
+}
+
+.taskdiv1 button{
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    font-family: var(--primaryFont);
+    cursor: pointer;
+}
+

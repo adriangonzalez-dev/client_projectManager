@@ -1,0 +1,26 @@
+.bodyProject{
+    width:100%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bodyProject h1{
+    font-size: 35px;
+}
+
+.bodyProject hr{
+    width: 100%;
+}
+
+.projectContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: center;
+}

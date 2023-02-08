@@ -1,0 +1,26 @@
+
+
+.checkbox{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox label{
+    padding: 5px;
+}
+
+.checkbox label img {
+    width: 100%;
+    cursor: pointer;
+}
+
+.checkbox input {
+    display: none;
+}
+
+.checkbox input:checked + label{
+    border: 1px solid var(--lightColor1)
+}

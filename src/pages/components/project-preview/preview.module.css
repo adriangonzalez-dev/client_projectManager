@@ -1,0 +1,36 @@
+.cardProject {
+	width: 200px;
+	height: 200px;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	justify-content: space-between;
+	align-items: center;
+	background-color: var(--lightColor3);
+	color: var(--lightColor1);
+	border-radius: 5px;
+	transition: all .2s ease;
+}
+
+.cardProject:hover {
+	transform: translateY(-5px);
+	background-color: var(--lightColor4);
+	border: 1px solid var(--darkColor1);
+	box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.75);
+}
+
+.cardProject img {
+	width: 60px;
+}
+
+.cardProject div{
+	text-align: center;
+	padding: 10px;
+	font-size: 23px;
+}
+
+.cardProject a {
+	font-size: 20px;
+}
