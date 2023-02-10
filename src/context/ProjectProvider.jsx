@@ -19,6 +19,11 @@ export const ProjectProvider = ({children}) => {
 
   const [createLoading, setCreateLoading] = useState(true);
 
+  const [tasks, setTasks] = useState([]);
+  const [task, setTask] = useState({});
+  const [loadingTasks, setLoadingTasks] = useState(true);
+  const [loadingTask, setLoadingTask] = useState(true);
+
   const createProject = async (body) => {
     const token = sessionStorage.getItem('token')
     if(!token){
@@ -176,6 +181,165 @@ export const ProjectProvider = ({children}) => {
     } 
   }
 
+  const getTaskById = async (id) => {
+    const token = sessionStorage.getItem('token')
+    if(!token){
+      return null;
+    }
+
+    const config ={
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token
+      }
+    }
+
+    try {
+      const {data} = await clientAxios.get(`/task/${id}`, config);
+      setTask(data.task)
+    } catch (error) {
+      /* console.log(error) */
+      setTask({})
+    } finally {
+      setLoadingTask(false)
+    }
+  }
+
+  const createTask = async (body) => {
+    const token = sessionStorage.getItem('token')
+    if(!token){
+      return null;
+    }
+
+    const config ={
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token
+      }
+    }
+
+    try {
+      const {data} = await clientAxios.post(`/task`, body, config);
+      Swal.fire(data.msg)
+      project.tasks = ([...project.tasks, data.task])
+      setProject(project);
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setCreateLoading(false)
+    }
+  }
+
+  const updateTask = async (body, id) => {
+    const token = sessionStorage.getItem('token')
+    if(!token){
+      return null;
+    }
+
+    const config ={
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token
+      }
+    }
+
+    try {
+      const {data} = await clientAxios.put(`/task/${id}`, body, config);
+      console.log(data)
+      setTasks([...tasks, data.task]);
+      Swal.fire(data.msg)
+    } catch (error) {
+      handleErrorAlert(error.response.data.msg)
+      console.log(error)
+    } finally {
+      setCreateLoading(false)
+    }
+  }
+
+  const getTasks = async (id) => {
+    const token = sessionStorage.getItem('token')
+    if(!token){
+      return null;
+    }
+
+    const config ={
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token
+      }
+    }
+
+    try {
+      const {data} = await clientAxios.get(`/task?project=${id}`, config);
+      setTasks(data.tasks)
+    } catch (error) {
+      console.log(error)
+      setTasks([])
+    } finally {
+      setLoadingTasks(false)
+    }
+  }
+
+  const deleteTask = async (id) => {
+    const token = sessionStorage.getItem('token')
+    if(!token){
+      return null;
+    }
+
+    const config ={
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token
+      }
+    }
+
+    try {
+      const {data} = await clientAxios.delete(`/task/${id}`, config);
+      /* Swal.fire(data.msg); */
+      project.tasks = project.tasks.filter(task=>task._id !== id);
+      setProject(project);
+    } catch (error) {
+      
+      console.log(error.response.data.msg)
+    } finally {
+      setCreateLoading(false)
+    }
+  }
+
+  const changeState = async (id) => {
+    const token = sessionStorage.getItem('token')
+    if(!token){
+      return null;
+    }
+
+    const config ={
+      headers: {
+        'content-type': 'application/json',
+        Authorization: token
+      }
+    }
+
+    try {
+      const {data} = await clientAxios.get(`/task/change-state/${id}`, config);
+      /* Swal.fire(data.msg); */
+      project.tasks = project.tasks.map(task=>{
+        if(task._id === id){
+          return task = {
+            ...task,
+            state : !task.state
+          }
+        }
+        return task;
+      });
+      setProject(project);
+    } catch (error) {
+      console.log(error/* .response.data.msg */)
+    } finally {
+      setCreateLoading(false)
+    }
+  }
+
+
   useEffect(()=>{
 
     const getProjects = async () => {
@@ -220,7 +384,17 @@ export const ProjectProvider = ({children}) => {
     deleteProject,
     addCollab,
     removeCollab,
-    reload
+    reload,
+    createTask,
+    updateTask,
+    getTaskById,
+    getTasks,
+    deleteTask,
+    loadingTask,
+    loadingTasks,
+    tasks,
+    task,
+    changeState
     }}>
         {children}
     </ProjectContext.Provider>

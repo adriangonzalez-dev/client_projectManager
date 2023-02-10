@@ -4,54 +4,58 @@ import Swal from "sweetalert2";
 import { ButtonTask } from "../buttonTask/ButtonTask";
 import styled from "styled-components";
 import { deleteMessage } from "../alerts/Alerts";
+import useProjects from "../../../hooks/useProject";
 
-const State = styled.p`
-    display: flex;
-    gap: 5px;
-    color: '#04AA6D' //'#ff9800'
-  `
+export const Task = ({task, setOpen}) => {
 
-export const Task = () => {
+  const {deleteTask, changeState} = useProjects()
 
-  const [state, setState] = useState(false)
+  const styleTask = task.state ? '#04AA6D' : '#ff9800'
 
-
-  const changeState = () => {
-    setState(!state)
-  }
-  
   const openDescription = () => {
-    Swal.fire('lorem ipsum asdaslknlak alkslkasj añlsfjaslkf jasjklf ')
+    Swal.fire(task.description)
   }
+
+  const destroyTask = () => {
+    deleteTask(task._id)
+  }
+
+  const changeStateTask = () => {
+    changeState(task._id)
+  }
+ 
   return (
     <div className={styles.task}>
       <div className={styles.taskdiv1}>
-        <p>Nombre de la tarea</p>
-        <button onClick={openDescription}>Descripcion</button>
-        <p>Fecha de entrega</p>
-        <p>Prioridad</p>
-        <State className={styles.state}>
+        <p>{task.name}</p>
+        <button onClick={openDescription}>descripción</button>
+        <p>{task.dateExpire.split('T')[0]}</p>
+        <p>{task.priority}</p>
+        <p className={styles.state} style={{color: styleTask}}>
           <i className="material-symbols-outlined">
-          {state ? 'done' : 'timelapse'}
-          </i> {state ? 'Completado' : 'Pendiente'} 
-        </State>
+          {task.state ? 'done' : 'timelapse'}
+          </i> {task.state ? 'Completado' : 'Pendiente'} 
+        </p>
         </div>
 
       <div className={styles.taskdiv2}>
         <ButtonTask 
         backgroundColor="#04AA6D"
         icon="material-symbols-outlined"
-        iconTitle="edit"/>
+        iconTitle="edit"
+        callback={setOpen}
+        />
         <ButtonTask 
         backgroundColor="#2196F3"
         icon="material-symbols-outlined"
         iconTitle="done"
-        callback={changeState}/>
+        callback={changeStateTask}
+        />
         <ButtonTask 
         backgroundColor="#f4511e"
         icon="material-symbols-outlined"
         iconTitle="delete"
-        callback={()=> deleteMessage(undefined, 'Eliminar tarea?')}/>
+        callback={()=> deleteMessage(destroyTask, 'Eliminar tarea?')}/>
       </div>
     </div>
   );

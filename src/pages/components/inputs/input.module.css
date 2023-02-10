@@ -24,7 +24,7 @@
     color: var(--lightColor1);
     font-size: 19px;
     pointer-events: none;
-    z-index: 0;
+    z-index: 1;
 }
 
 .input:focus ~ label,

@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 export const ProjectDetail = () => {
   const navigate = useNavigate();
   const {id} = useParams();
-  const {getProjectById, project, isLoadingId, addCollab,reload} = useProjects();
+  const {getProjectById, project, isLoadingId, addCollab,tasks, getTasks, loadingTasks} = useProjects();
   const [show, setShow] = useState(false)
 
   const setOpen = () => {
@@ -22,9 +22,8 @@ export const ProjectDetail = () => {
   }
 
   useEffect (()=>{
-    getProjectById(id)
-  },[id, reload])
-
+    getProjectById(id);
+  },[id])
   const addCollaborator = async () => {
     const { value: email } = await Swal.fire({
       title: 'Ingrese el email',
@@ -50,7 +49,7 @@ export const ProjectDetail = () => {
     <div className={styles.detailContainer}>
       <h1>{project.name}</h1>
       <hr />
-      {show && <Modal setClose={setClose}/>}
+      {show && <Modal setClose={setClose} />}
       <div className={styles.taskheader}>
           <p>Tareas del proyecto</p>
           <p>Fecha Limite: {(project.dateExpire.split('T')[0])}</p>
@@ -76,11 +75,14 @@ export const ProjectDetail = () => {
         </div>
       </div>
       <div className={styles.taskContainer}>
-        <Task/>
-        <Task/>
-        <Task/>
-        <Task/>
-        <Task/>
+          {
+            project.tasks.map(task=>
+              <Task 
+                key={task._id}
+                task={task}
+                setOpen={setOpen}
+                />)
+          }
       </div>
       <hr />
       <div className={styles.collaboratorHeader}>

@@ -7,17 +7,40 @@ import { useAuth, useFetchFiles } from "../../hooks";
 import useProjects from "../../hooks/useProject";
 import { uploadImage } from "../../helpers/uploadFiles";
 import { Spinner } from "../spinner/Spinner";
+import { uploadImageUser } from "../../helpers/uploadAvatar";
 
 
 export const Sidebar = () => {
     const { id } = useParams();
-    const [images, setImages] = useState([])
     const navigate = useNavigate();
     const { auth, isLoading } = useAuth();
     const {isLoadingId, project} = useProjects();
     const {images:imagesProject, imageLoading, getFiles} = useFetchFiles()
 
-    
+    const uploadAvatar = async () => {
+      const { value: file } = await Swal.fire({
+        title: 'Seleccionar foto de perfil',
+        input: 'file',
+        inputAttributes: {
+          'accept': 'image/*',
+          'aria-label': 'Subir avatar'
+        }
+      })
+      
+      if (file) {
+        /* const reader = new FileReader()
+        reader.onload = (e) => {
+          setImages((prev)=>[...prev, e.target.result]);
+          Swal.fire({
+            title: 'Your uploaded picture',
+            imageUrl: e.target.result,
+            imageAlt: 'The uploaded picture'
+          })
+        } */
+        uploadImageUser(file)
+        reader.readAsDataURL(file)
+      }
+    }
     const uploadFiles = async () => {
       const { value: file } = await Swal.fire({
         title: 'Seleccionar archivos',
@@ -59,15 +82,20 @@ export const Sidebar = () => {
       if(id){
         getFiles(id);
       }
-/*       return () => {
-        getFiles('');
-      }; */
     },[id])
-
     return (
       <aside className={styles.aside}>
       <div className={styles.profile}>
-        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="profile" />
+        <div className={styles.avatarContainer} onClick={uploadAvatar}>
+          {
+            isLoading ?
+            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="profile" />
+            :
+            <img src={auth.avatar} alt="profile" />
+            
+          }
+          <div><i class="fa-solid fa-camera"></i></div>
+        </div>
         <h2>{auth.name}</h2>
       </div>
       {

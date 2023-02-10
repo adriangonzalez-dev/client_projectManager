@@ -21,10 +21,10 @@ export const FormProject = ({project='', action=''}) => {
   } */
 
   const {formValues, handleInputChange} = useForm({
-    name: project.name || '',
-    description: project.description || '',
-    client: project.client || '',
-    dateExpire:  project.dateExpire.split('T')[0] || ''
+    name: project ? project.name : '',
+    description: project ? project.description : '',
+    client: project ? project.client : '',
+    dateExpire:  project ? project.dateExpire.split('T')[0] : ''
   });
 
   const {name, description, client, dateExpire} = formValues;
@@ -90,7 +90,6 @@ export const FormProject = ({project='', action=''}) => {
             return <ImageCheckbox
              name='icon'
              image={iconName}
-             value={iconName}
              key={iconName}
              setInput={handleInputChange}
              hFor={iconName}

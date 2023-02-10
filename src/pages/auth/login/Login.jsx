@@ -41,8 +41,6 @@ export const Login = () => {
 
       handleSuccessAlert(data.msg);
 
-      navigate('/projects');
-
     } catch (error) {
       console.log(error)
       handleErrorAlert(error.response.data.message)

@@ -13,6 +13,10 @@ export const Projects = () => {
         {isLoading ? 
         <Spinner message='Cargando...' size='50'/>
         :
+        projects.length === 0 
+        ? 
+        <p>No hay proyectos</p>
+        :
         projects.map((project, index)=><ProjectPreview
                       client={project.client}
                       icon={project.icon}

@@ -34,7 +34,7 @@ export const deleteMessage = (action, title) => {
     confirmButtonText: 'Si, Eliminar!'
   }).then((result) => {
     if (result.isConfirmed) {
-      /* action recibe un callback */
+      action();
       Swal.fire(
         'Deleted!',
         'Your file has been deleted.',

@@ -1,0 +1,36 @@
+.selectContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-width: 250px;
+    height: 50px;
+    margin: 15px 0;
+    background-color: #2873ff;
+}
+
+.selectBox{
+    border:none;
+    appearance: none;
+    padding: 0 30px 0 15px;
+    width: 100%;
+    color: white;
+    background-color: #2873ff;
+    font-size: 20px;
+    font-family: var(--secondaryFont);
+}
+
+.selectContainer .iconContainer {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #023ca9;
+}
+
+.iconContainer i {
+    font-size: 30px;
+    color: white;
+}
